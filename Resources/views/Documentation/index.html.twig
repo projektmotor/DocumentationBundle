@@ -1,0 +1,12 @@
+{% extends baseTemplate %}
+
+{% block content %}
+    <div class="row content-wrapper border">
+        <div class="col-md-3  hidden-sm hidden-xs left-col">
+            {{ knp_menu_render('doc', {currentClass : 'active', ancestorClass: 'subnav', depth : 3}) }}
+        </div>
+        <div class="col-md-9 col-xs-12 right-col">
+            {{ content|raw }}
+        </div>
+    </div>
+{% endblock %}

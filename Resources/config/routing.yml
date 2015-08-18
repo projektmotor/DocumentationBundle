@@ -1,0 +1,5 @@
+pm_documentation_homepage:
+    path:     /{locale}/{document}
+    defaults: { _controller: PmDocumentationBundle:Documentation:index, document: null}
+    requirements:
+        document: .+

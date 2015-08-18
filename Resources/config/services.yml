@@ -1,0 +1,45 @@
+services:
+    # helper to build submenu
+    pm_documentation.menu_helper:
+        class: Pm\DocumentationBundle\Menu\MenuBuilderHelper
+        arguments:
+            - @pm_documentation.markdown.parser
+            - @pm_documentation.markdown.reader.filesystem
+            - @pm_documentation.menu.cache
+
+    # submenu
+    pm_documentation.menu_builder:
+        class: Pm\DocumentationBundle\Menu\DocMenuBuilder
+        arguments:
+            - @knp_menu.factory
+            - @pm_documentation.menu_helper
+    pm_documentation.doc_menu:
+        class: Knp\Menu\MenuItem
+        factory: ["@pm_documentation.menu_builder", createDocMenu]
+        arguments: ["@request_stack"]
+        tags:
+            - { name: knp_menu.menu, alias: doc }
+
+    # menu caching
+    pm_documentation.menu.cache:
+        class: Pm\DocumentationBundle\Menu\Cache\FilesystemCache
+        arguments:
+            - %kernel.cache_dir%
+            - @pm_documentation.menu.cache_transformer
+    pm_documentation.menu.cache_transformer:
+        class: Pm\DocumentationBundle\Menu\Cache\MenuCacheTransformer
+        arguments:
+            - @knp_menu.factory
+
+    # markdown
+    pm_documentation.markdown.reader.filesystem:
+        class: Pm\DocumentationBundle\Markdown\Reader\Filesystem\FilesystemMarkdownReader
+        arguments:
+            - %kernel.root_dir%
+            - %pm_documentation.doc_path%
+            - %pm_documentation.image_path%
+    pm_documentation.markdown.parser:
+        class: Pm\DocumentationBundle\Markdown\Parser
+        arguments:
+            - @markdown.parser
+            - @router
