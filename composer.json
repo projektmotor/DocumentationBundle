@@ -18,5 +18,7 @@
         "psr-4" : {
             "Pm\\DocumentationBundle\\" : ""
         }
-    }
+    },
+    ,
+    "target-dir": "Pm/DocumentationBundle"
 }
