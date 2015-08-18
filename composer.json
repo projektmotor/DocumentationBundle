@@ -19,6 +19,5 @@
             "Pm\\DocumentationBundle\\" : ""
         }
     },
-    ,
     "target-dir": "Pm/DocumentationBundle"
 }
