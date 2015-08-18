@@ -1,5 +1,5 @@
 {
-    "name": "pm/documentationbundle",
+    "name": "projektmotor/documentationbundle",
     "type": "symfony-bundle",
     "description": "Symfony2 markdown based documentation bundle",
     "keywords": ["Markdown", "Menu", "Documentation"],
@@ -18,6 +18,5 @@
         "psr-4" : {
             "Pm\\DocumentationBundle\\" : ""
         }
-    },
-    "target-dir": "Pm/DocumentationBundle"
+    }
 }
