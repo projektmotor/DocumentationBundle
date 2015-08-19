@@ -82,18 +82,5 @@ class Parser
             $html
         );
     }
-
-    public function replaceLinksCallback($hits)
-    {
-        $test = 1;
-
-        if (count($hits) != 1) {
-            return array(
-                'a','b'
-            );
-        }
-
-//        return $hits;
-        return 'href="/x/y7"';
-    }
 }
+
