@@ -58,7 +58,7 @@ pm_documentation:
     image_path: '/path/to/doc/images'
     view:       'AppBundle::layout.html.twig'
 ```
-  * NOTE: the template (view) MUST CONTAIN a block called *content* where the parsed markdown is rendered in.```
+  * NOTE: the template (view) MUST CONTAIN a block called *content* where the parsed markdown is rendered in.
 
 ## Usage
 
@@ -69,7 +69,7 @@ pm_documentation:
   *  /my/doc/en
   *  /my/doc/de
   *  ...
-*  every dir behind the language-dirs **MUST** contain an **index.md** (see [Requesting a Page](#Requesting-a-Page))
+*  every dir behind the language-dirs **MUST** contain an **index.md** (see [Requesting a Page](#requesting-a-page))
   *  /my/doc/en/index.md
   *  /my/doc/en/chapter_1/index.md
   *  ...
