@@ -43,7 +43,7 @@ class MenuBuilderHelper
 
     /**
      * @param ItemInterface $rootItem
-     * @param string $lang
+     * @param string $locale
      */
     public function buildDocumentationMenu(ItemInterface $rootItem, $locale = 'en')
     {
