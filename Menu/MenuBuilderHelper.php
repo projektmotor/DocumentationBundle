@@ -45,19 +45,19 @@ class MenuBuilderHelper
      * @param ItemInterface $rootItem
      * @param string $lang
      */
-    public function buildDocumentationMenu(ItemInterface $rootItem, $lang = 'de')
+    public function buildDocumentationMenu(ItemInterface $rootItem, $locale = 'en')
     {
         try {
             $rootItem->setChildren(
-                $this->cache->read()
+                $this->cache->read($locale)
             );
         } catch (FileNotFoundException $e) {
-            $markdown = $this->markdownReader->getTocMarkdown($lang);
+            $markdown = $this->markdownReader->getTocMarkdown($locale);
             $htmlToc = $this->buildHtmlToc($markdown);
 
-            $this->buildMenuItems($htmlToc, $rootItem, $lang);
+            $this->buildMenuItems($htmlToc, $rootItem, $locale);
 
-            $this->cache->write($rootItem->getChildren());
+            $this->cache->write($rootItem->getChildren(), $locale);
         }
     }
 

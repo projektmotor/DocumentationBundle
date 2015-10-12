@@ -28,11 +28,18 @@ class DocMenuBuilder
         $this->subMenuBuilder = $subMenuBuilder;
     }
 
+    /**
+     * @param RequestStack $requestStack
+     * @return \Knp\Menu\ItemInterface
+     */
     public function createDocMenu(RequestStack $requestStack)
     {
         $menu = $this->factory->createItem('root');
 
-        $this->subMenuBuilder->buildDocumentationMenu($menu);
+        $this->subMenuBuilder->buildDocumentationMenu(
+            $menu,
+            $requestStack->getMasterRequest()->get('locale')
+        );
 
         return $menu;
     }

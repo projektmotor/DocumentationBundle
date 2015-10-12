@@ -14,12 +14,14 @@ interface MenuCacheInterface
 {
     /**
      * @param array $children
+     * @param string $locale
      * @return mixed
      */
-    public function write(array $children);
+    public function write(array $children, $locale = 'en');
 
     /**
+     * @param string $locale
      * @return array|null
      */
-    public function read();
+    public function read($locale = 'en');
 }

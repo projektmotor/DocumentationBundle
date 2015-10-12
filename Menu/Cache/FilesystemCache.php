@@ -33,14 +33,14 @@ class FilesystemCache implements MenuCacheInterface
     /**
      * @inheritdoc
      */
-    public function write(array $children)
+    public function write(array $children, $locale = 'en')
     {
-        if (!is_dir($this->getCacheDir())) {
-            mkdir($this->getCacheDir(), 0777, true);
+        if (!is_dir($this->getCacheDir($locale))) {
+            mkdir($this->getCacheDir($locale), 0777, true);
         }
 
         file_put_contents(
-            $this->getCacheDir() . self::CACHE_FILE,
+            $this->getCacheDir($locale) . self::CACHE_FILE,
             serialize(
                 $this->menuCacheTransformer->transformToCacheData($children)
             )
@@ -50,15 +50,15 @@ class FilesystemCache implements MenuCacheInterface
     /**
      * @inheritdoc
      */
-    public function read()
+    public function read($locale = 'en')
     {
-        if (!file_exists($this->getCacheDir() . self::CACHE_FILE)) {
+        if (!file_exists($this->getCacheDir($locale) . self::CACHE_FILE)) {
             throw new FileNotFoundException();
         }
 
         $cashedData = unserialize(
             file_get_contents(
-                $this->getCacheDir() . self::CACHE_FILE
+                $this->getCacheDir($locale) . self::CACHE_FILE
             )
         );
 
@@ -68,11 +68,12 @@ class FilesystemCache implements MenuCacheInterface
     /**
      * @return string
      */
-    private function getCacheDir()
+    private function getCacheDir($locale)
     {
         return sprintf(
-            '%s/pm/DocumentationBundle/',
-            $this->cacheDir
+            '%s/pm/DocumentationBundle/%s/',
+            $this->cacheDir,
+            $locale
         );
     }
 }
