@@ -55,17 +55,18 @@ pm_documentation:
 # e.g. app/config/config.yml
 pm_documentation:
     doc_path:   '/path/to/doc'
-    image_path: '/path/to/doc/images'
+    image_dest: '/web/images/doc'
     view:       'AppBundle::layout.html.twig'
 ```
   * NOTE: the template (view) MUST CONTAIN a block called *content* where the parsed markdown is rendered in.
+  * NOTE: image destination path must be writeable by the web server user (e.g. www-data)
 
 ## Usage
 
 ### Directory Structure
 
 * let`s say your documentation-root is at **/my/doc**
-* the first level subdirectories divide different languages from each other
+* first level subdirectories divide different languages from each other
   *  /my/doc/en
   *  /my/doc/de
   *  ...
@@ -134,3 +135,13 @@ class MenuBuilder
 }
 ```
 
+### Markdown Extensions
+
+#### Including Images
+
+* the bundle cares about url rewriting and image publication
+* assuming your images are placed under `/path/to/doc/images` and you want to link a file `/path/to/doc/images/example.jpg`, just do:
+
+```
+!/images/example.jpg!
+```
