@@ -57,8 +57,6 @@ class Parser
         $html = $this->parser->transformMarkdown($markdown);
         $html = $this->replaceLinks($html);
 
-        $test = $this->replaceImages($html);
-
         return $this->replaceImages($html);
     }
 
@@ -69,7 +67,6 @@ class Parser
     private function replaceLinks($html)
     {
         return  preg_replace_callback(
-//            '/href=("\/.*")[\s>]/',
             '/href=("\/.*")\s?/U',
             function ($hits) {
                 $uri = $hits[1];
@@ -86,17 +83,6 @@ class Parser
                         $document = substr($document, 0, strlen($document) - 6);
                     }
                 }
-
-                $test = sprintf(
-                    'href="%s" ',
-                    $this->router->generate(
-                        'pm_documentation_homepage',
-                        array(
-                            'locale' => $locale,
-                            'document' => $document
-                        )
-                    )
-                );;
 
                 return sprintf(
                     'href="%s" ',
