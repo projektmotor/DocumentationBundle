@@ -19,14 +19,29 @@ class Parser
     /** @var Router */
     private $router;
 
+    /** @var String */
+    private $appRoot;
+
+    /** @var String */
+    private $docPath;
+
+    /** @var String */
+    private $imageDest;
+
     /**
      * @param MarkdownParserInterface $parser
      * @param Router $router
+     * @param String $appRoot
+     * @param String $docPath
+     * @param String $imageDest
      */
-    public function __construct(MarkdownParserInterface $parser, Router $router)
+    public function __construct(MarkdownParserInterface $parser, Router $router, $appRoot, $docPath, $imageDest)
     {
         $this->parser = $parser;
         $this->router = $router;
+        $this->appRoot = $appRoot;
+        $this->docPath = $docPath;
+        $this->imageDest = $imageDest;
     }
 
     /**
@@ -40,8 +55,9 @@ class Parser
     public function transform($markdown)
     {
         $html = $this->parser->transformMarkdown($markdown);
+        $html = $this->replaceLinks($html);
 
-        return $this->replaceLinks($html);
+        return $this->replaceImages($html);
     }
 
     /**
@@ -77,6 +93,45 @@ class Parser
                             'document' => $document
                         )
                     )
+                );
+            },
+            $html
+        );
+    }
+
+    /**
+     * @param string $html
+     * @return string
+     */
+    private function replaceImages($html)
+    {
+        return  preg_replace_callback(
+            '/!\/.*!/',
+            function ($hits) {
+                $imagePath = substr($hits[0], 1, strlen($hits[0]) - 2);
+                $uriParts = explode('/', $imagePath);
+                $filename = $uriParts[count($uriParts) - 1];
+
+                $destPath = $this->appRoot . '/' . $this->imageDest . '/' . $filename;
+
+                if (!file_exists($destPath)) {
+                    if (!is_dir($this->appRoot . '/' . $this->imageDest)) {
+                        mkdir($this->appRoot . '/' . $this->imageDest, 0777, true);
+                    }
+
+                    try {
+                        copy(
+                            $this->appRoot . '/' . $this->docPath . $imagePath,
+                            $destPath
+                        );
+                    } catch (\Exception $e) {}
+                }
+
+                $webPath = '/'.substr($destPath, strpos($destPath, '/web/') + 5);
+
+                return sprintf(
+                    '<img src="%s"/>',
+                    $webPath
                 );
             },
             $html

@@ -23,7 +23,7 @@ class PmDocumentationExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('pm_documentation.doc_path', $config['doc_path']);
-        $container->setParameter('pm_documentation.image_path', $config['image_path']);
+        $container->setParameter('pm_documentation.image_dest', $config['image_dest']);
         $container->setParameter('pm_documentation.view', $config['view']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));

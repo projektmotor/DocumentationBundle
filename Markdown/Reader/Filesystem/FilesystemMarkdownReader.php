@@ -19,19 +19,14 @@ class FilesystemMarkdownReader implements MarkdownReaderInterface
     /** @var string  */
     private $docDir;
 
-    /** @var string  */
-    private $imageDir;
-
     /**
      * @param string $kernelRootDir
      * @param string $docDir
-     * @param string $imageDir
      */
-    public function __construct($kernelRootDir, $docDir, $imageDir)
+    public function __construct($kernelRootDir, $docDir)
     {
         $this->kernelRootDir = $kernelRootDir;
         $this->docDir = $docDir;
-        $this->imageDir = $imageDir;
     }
 
     /**
