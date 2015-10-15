@@ -67,7 +67,7 @@ class Parser
     private function replaceLinks($html)
     {
         return  preg_replace_callback(
-            '/href=("\/.*")\s/',
+            '/href=("\/.*")\s?/',
             function ($hits) {
                 $uri = $hits[1];
                 $uriParts = explode('/', $uri);
