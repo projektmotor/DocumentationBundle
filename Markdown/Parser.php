@@ -106,9 +106,9 @@ class Parser
     private function replaceImages($html)
     {
         return  preg_replace_callback(
-            '/!\/.*!/',
+            '/img src=("\/.*")\s?/U',
             function ($hits) {
-                $imagePath = substr($hits[0], 1, strlen($hits[0]) - 2);
+                $imagePath = substr($hits[1], 1, strlen($hits[1]) - 2);
                 $uriParts = explode('/', $imagePath);
                 $filename = $uriParts[count($uriParts) - 1];
 
@@ -130,7 +130,7 @@ class Parser
                 $webPath = '/'.substr($destPath, strpos($destPath, '/web/') + 5);
 
                 return sprintf(
-                    '<img src="%s"/>',
+                    'img src="%s"',
                     $webPath
                 );
             },
