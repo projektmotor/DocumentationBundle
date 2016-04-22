@@ -2,12 +2,15 @@
 
 Symfony2 Bundle to build simple Markdown based documentations (thanks to [KnpMarkdownBundle](https://github.com/KnpLabs/KnpMarkdownBundle) & [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle)).
 
+Markdown syntax: [cheatsheet](https://guides.github.com/features/mastering-markdown)
+
 ## Features
 
 * filesystem based for simple handling (create markdown-file, request uri, ready!)
 * generate menus (KnpMenu) by simply parsing a toc-file (table of content)
 * link rewriting: links could be written absolute to documentation root, bundle rewrites these
 links to be accessable by public urls
+* image url rewriting: bundle is publishing the images to the configured path and rewrites urls, similar to links
 
 ## Dependencies
 
@@ -55,17 +58,18 @@ pm_documentation:
 # e.g. app/config/config.yml
 pm_documentation:
     doc_path:   '/path/to/doc'
-    image_path: '/path/to/doc/images'
+    image_dest: '/web/images/doc'
     view:       'AppBundle::layout.html.twig'
 ```
   * NOTE: the template (view) MUST CONTAIN a block called *content* where the parsed markdown is rendered in.
+  * NOTE: image destination path must be writeable by the web server user (e.g. www-data)
 
 ## Usage
 
 ### Directory Structure
 
 * let`s say your documentation-root is at **/my/doc**
-* the first level subdirectories divide different languages from each other
+* first level subdirectories divide different languages from each other
   *  /my/doc/en
   *  /my/doc/de
   *  ...
@@ -133,4 +137,3 @@ class MenuBuilder
   // ....
 }
 ```
-

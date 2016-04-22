@@ -37,9 +37,11 @@ services:
         arguments:
             - %kernel.root_dir%
             - %pm_documentation.doc_path%
-            - %pm_documentation.image_path%
     pm_documentation.markdown.parser:
         class: Pm\DocumentationBundle\Markdown\Parser
         arguments:
             - @markdown.parser
             - @router
+            - %kernel.root_dir%
+            - %pm_documentation.doc_path%
+            - %pm_documentation.image_dest%
