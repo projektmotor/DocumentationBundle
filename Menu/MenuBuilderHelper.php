@@ -48,7 +48,7 @@ class MenuBuilderHelper
     public function buildDocumentationMenu(ItemInterface $rootItem, $locale = 'en')
     {
         try {
-            $chilItems = $this->cache->read($locale);
+            $childItems = $this->cache->read($locale);
 
             /** @var ItemInterface $childItem */
             foreach ($childItems as $childItem) {
