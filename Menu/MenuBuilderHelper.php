@@ -48,9 +48,12 @@ class MenuBuilderHelper
     public function buildDocumentationMenu(ItemInterface $rootItem, $locale = 'en')
     {
         try {
-            $rootItem->setChildren(
-                $this->cache->read($locale)
-            );
+            $chilItems = $this->cache->read($locale);
+
+            /** @var ItemInterface $childItem */
+            foreach ($childItems as $childItem) {
+                $rootItem->addChild($childItem);
+            }
         } catch (FileNotFoundException $e) {
             $markdown = $this->markdownReader->getTocMarkdown($locale);
             $htmlToc = $this->buildHtmlToc($markdown);
